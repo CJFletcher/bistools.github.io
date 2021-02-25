@@ -164,7 +164,11 @@ function doesCollide(x,y,s,x2,y2,s2){
 	}
 	return true;
 }
-function legalPosition(x,y,s,index){
+function legalPosition(x,y,index){
+	
+	var t = mobs[index][2]
+	var s = SIZE[t]
+
 	if(y-(s-1)<0 || x+(s-1)>28){
 		return false;
 	}
@@ -175,9 +179,10 @@ function legalPosition(x,y,s,index){
 		}
 	}
 	//nibblers move through mobs
-	if(s>1){
+	if(t!=6){
 		for(var i=0;i<mobs.length;i++){
-			if(i!=index){
+			//mobs move through nibblers
+			if(i!=index && mobs[i][2]!=6){
 				collision = collision | doesCollide(x,y,s,mobs[i][0],mobs[i][1],SIZE[mobs[i][2]]);
 			}
 		}
@@ -219,12 +224,12 @@ function step(){
 				if(doesCollide(dx,dy,s,selected[0],selected[1],1)){
 					dy = mob[1]
 				}
-				if(legalPosition(dx,dy,s,i)){
+				if(legalPosition(dx,dy,i)){
 					mob[0] = dx;
 					mob[1] = dy;
-				}else if(legalPosition(dx,y,s,i)){
+				}else if(legalPosition(dx,y,i)){
 					mob[0] = dx;
-				}else if(legalPosition(x,dy,s,i)){
+				}else if(legalPosition(x,dy,i)){
 					mob[1] = dy;
 				}
 			}
