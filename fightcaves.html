@@ -43,6 +43,20 @@ can.width = 500
 can.height = 500
 var map = new Image()
 map.src = "map.png"
+var bird = new Image()
+bird.src = "22.png"
+var blob = new Image()
+blob.src = "45.png"
+var range = new Image()
+range.src = "90.png"
+var rat = new Image()
+rat.src = "180.png"
+var mage = new Image()
+mage.src = "360.png"
+var jad = new Image()
+jad.src = "702.png"
+var healer = new Image()
+healer.src = "healer.png"
 
 var clock = [4,2,1,0,2,4,3,0,1,4,2,3,0,1,3]
 var loc = [[100,100],[230,230],[100,370],[300,350],[375,280]]
@@ -75,20 +89,12 @@ function prev(){
 	drawWave()
 }
 
-
-
-
-
+function drawMob(ci, img, w, h){
+	ctx.drawImage(img,loc[ci][0],loc[ci][1],w,h)
+}
 
 map.onload = function(){
 	drawWave();
-}
-
-function drawMob(ci,color,size=25){
-	ctx.fillStyle = color
-	ctx.beginPath();
-	ctx.arc(loc[ci][0],loc[ci][1],size,0,Math.PI*2)
-	ctx.fill();
 }
 
 function drawWave(){
@@ -105,26 +111,26 @@ function drawWave(){
 
 	while(w>0){
 		if(w>=63){
-			drawMob(clock[li],"cyan");
-			drawMob(clock[(li+1)%15],"purple",15)
-			drawMob(clock[(li+2)%15],"purple",15)
-			drawMob(clock[(li+3)%15],"purple",15)
-			drawMob(clock[(li+4)%15],"purple",15)
+			drawMob(clock[li],jad,50,50);
+			drawMob(clock[(li+1)%15],healer,30,30)
+			drawMob(clock[(li+2)%15],healer,30,30)
+			drawMob(clock[(li+3)%15],healer,30,30)
+			drawMob(clock[(li+4)%15],healer,30,30)
 			w -= 63
 		}else if(w>=31){
-			drawMob(clock[li],"red",30);
+			drawMob(clock[li],mage,45,45);
 			w-=31
 		}else if(w>=15){
-			drawMob(clock[li],"yellow",25);
+			drawMob(clock[li],rat,40,40);
 			w-=15
 		}else if(w>=7){
-			drawMob(clock[li],"green",20);
+			drawMob(clock[li],range,35,35);
 			w-=7
 		}else if(w>=3){
-			drawMob(clock[li],"grey",15);
+			drawMob(clock[li],blob,30,30);
 			w-=3
 		}else{
-			drawMob(clock[li],"white",10);
+			drawMob(clock[li],bird,25,25);
 			w--
 		}
 		li = (li+1)%15
